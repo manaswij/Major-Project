@@ -4,8 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -13,7 +11,7 @@ import jakarta.persistence.Table;
 public class UsersModel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+private Integer id;
 	String login;
 	String username;
 	String password;
@@ -49,19 +47,6 @@ public class UsersModel {
 	}
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	
-	@ManyToOne
-	@JoinColumn(name = "replication_option_id")
-	private ReplicationOption replicationOption;
-
-	public ReplicationOption getReplicationOption() {
-	    return replicationOption;
-	}
-
-	public void setReplicationOption(ReplicationOption replicationOption) {
-	    this.replicationOption = replicationOption;
 	}
 	
 }

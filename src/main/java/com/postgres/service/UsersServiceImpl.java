@@ -1,10 +1,9 @@
 package com.postgres.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.postgres.model.UsersModel;
 import com.postgres.repository.UsersRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class UsersServiceImpl implements UsersService {
@@ -25,10 +24,5 @@ public class UsersServiceImpl implements UsersService {
             return user;
         }
         return null;
-    }
-    
-    @Override
-    public UsersModel saveUser(UsersModel user) {
-        return userRepository.save(user);
     }
 }

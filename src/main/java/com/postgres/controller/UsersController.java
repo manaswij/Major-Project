@@ -1,14 +1,13 @@
 package com.postgres.controller;
 
+import com.postgres.model.UsersModel;
+import com.postgres.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import com.postgres.model.UsersModel;
-import com.postgres.service.UsersService;
 
 @Controller
 public class UsersController {

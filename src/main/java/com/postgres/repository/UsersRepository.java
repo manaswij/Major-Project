@@ -10,9 +10,8 @@
 //}
 
 package com.postgres.repository;
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.postgres.model.UsersModel;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UsersRepository extends JpaRepository<UsersModel, String> {
     UsersModel findByUsername(String username);
