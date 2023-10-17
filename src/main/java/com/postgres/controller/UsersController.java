@@ -2,6 +2,9 @@ package com.postgres.controller;
 
 import com.postgres.model.UsersModel;
 import com.postgres.service.UsersService;
+
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -52,10 +55,11 @@ public class UsersController {
 }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute UsersModel user, Model model) {
+    public String login(@ModelAttribute UsersModel user, Model model, HttpSession session) {
         UsersModel authenticatedUser = userService.authenticateUser(user.getUsername(), user.getPassword());
         System.out.println("User is "+ authenticatedUser);
         if (authenticatedUser != null) {
+        	session.setAttribute("user", authenticatedUser);
             model.addAttribute("user", authenticatedUser);
             return "redirect:/welcome";
         } else {
@@ -63,6 +67,9 @@ public class UsersController {
             return "Login";
         }
     }
+    
+   
+   
     
     
 }

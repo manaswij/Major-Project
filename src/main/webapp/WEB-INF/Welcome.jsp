@@ -60,7 +60,7 @@
 	<br>
 
 <form method="POST" action="/saveReplicationOption">
- 	<h5>Current Replication Option: ${user.replicationOption}</h5>
+ 	<h5>Current Replication Option: ${user.username}</h5>
     <select name="selectedOption">
         <option value="Block-level replica">Block-level replica</option>
         <option value="File-level replica">File-level replica</option>
