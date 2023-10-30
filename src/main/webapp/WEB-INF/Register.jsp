@@ -38,14 +38,15 @@
 
                 <button type="submit" class="btn btn-primary">Register</button>
                 <br>
-                <a href="/login">Navigate to login</a>
+                <br>
+              <a href="/login">Navigate to login</a>
             </form>
 
         </div>
         <div class="col-4">
             <img alt="" class="img-responsive"
                  src="https://img.freepik.com/free-vector/privacy-policy-concept-illustration_114360-7853.jpg?size=626&ext=jpg&ga=GA1.2.1985589139.1697181929&semt=ais"
-                 style="width: 50%; height: 50%; margin-left: 30%">
+                 style="width: 100%; height: 100%; margin-left: 30%">
         </div>
         <div class="col-2"></div>
 

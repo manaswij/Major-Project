@@ -64,15 +64,41 @@
 	<br>
 
 <form method="POST" action="/saveReplicationOption" style="padding-left:50px;">
- 	<h5>Current Replication Option: ${user.username}</h5>
-    <select name="selectedOption">
-        <option value="Block-level replica">Block-level replica</option>
-        <option value="File-level replica">File-level replica</option>
-        <option value="MongoDB-level replica">MongoDB-level replica</option>
-    </select>
-    <input type="submit" value="Save Option">
+     <div class="form-group">
+        <label for="selectedTechnique">Replication type</label>
+        <select class="form-control" id="selectedTechnique" name="replication_type" style="width: 30%;">
+            <option value="Block-level replica">Block-level replica</option>
+            <option value="File-level replica">File-level replica</option>
+            <option value="MongoDB-level replica">MongoDB-level replica</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="selectedMode">Technique</label>
+        <select class="form-control" id="selectedMode" name="technique" style="width: 30%;">
+            <option value="Active-Active">Active-Active  </option>
+            <option value="Active-Passive">Active-Passive</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="selectedDirection">Direction</label>
+        <select class="form-control" id="selectedDirection" name="direction" style="width: 30%;">
+            <option value="Forward">Forward</option>
+            <option value="Reverse">Reverse</option>
+            <option value="Forward+Reverse">Forward+Reverse</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="selectedDirection">Flat file</label>
+        <select class="form-control" id="selectedFlatfile" name="flatfile" style="width: 30%;">
+            <option value="PostgreSQL">PostgreSQL</option>
+            <option value="MongoDb">MongoDb</option>
+            <option value="SQL">SQL</option>
+        </select>
+    </div>
+    <br>
+    <input type="submit" class="btn btn-primary" style="background-color: #002b80;" value="Save Option">
 </form>
-
+<br>
 	
 	<a href="/register" style="padding-left:50px;"> Navigate to registration </a>
 	<br>

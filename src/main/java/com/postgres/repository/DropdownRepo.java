@@ -6,3 +6,6 @@ import com.postgres.model.ReplicationOption;
 
 public interface DropdownRepo extends JpaRepository<ReplicationOption, Long> {
 }
+
+
+
