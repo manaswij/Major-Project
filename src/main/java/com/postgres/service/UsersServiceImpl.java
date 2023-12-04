@@ -2,6 +2,11 @@ package com.postgres.service;
 
 import com.postgres.model.UsersModel;
 import com.postgres.repository.UsersRepository;
+
+import jakarta.persistence.NonUniqueResultException;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +23,23 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public UsersModel authenticateUser(String username, String password) {
-        UsersModel user = userRepository.findByUsername(username);
-        System.out.println("User Service IMPL is "+ user);
-        if (user != null && user.getPassword().equals(password)) {
-            return user;
+        List<UsersModel> users = userRepository.findAllByUsernameAndPassword(username, password);
+
+        if (users.size() == 1) {
+            return users.get(0);
+        } else if (users.isEmpty()) {
+            // Handle the case where no user is found
+            return null;
+        } else {
+            // Handle the case where multiple users are found (NonUniqueResultException)
+            // Log a warning message
+            // log.warn("Multiple users found for username: {}", username);
+
+            // You might want to throw a custom exception or handle it differently
+            throw new NonUniqueResultException("Multiple users found for username: " + username);
+
+            // Return null to indicate that the authentication failed
+            // return null; // This line is unreachable
         }
-        return null;
     }
 }
