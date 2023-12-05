@@ -10,6 +10,8 @@ public class ReplicationOptionListener {
     @PrePersist
     public void prePersist(ReplicationOption replicationOption) {
         replicationOption.setEndDate(LocalDate.now());
+        replicationOption.calculateNoOfDays();
+
     }
 }
 

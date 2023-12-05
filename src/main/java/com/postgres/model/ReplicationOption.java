@@ -33,7 +33,7 @@ public class ReplicationOption {
     @Column(name = "end_date")
     private LocalDate endDate;
 
-    @Column(name = "no_of_days", insertable = false, updatable = false)
+    @Column(name = "no_of_days")
     private Integer noOfDays;
 
     @Column(name = "number_of_bytes")
@@ -68,7 +68,7 @@ public class ReplicationOption {
         if (startDate != null && endDate != null) {
             noOfDays = (int) ChronoUnit.DAYS.between(startDate, endDate);
         } else {
-            noOfDays = 10;
+            noOfDays = null;
         }
     }
 
@@ -135,32 +135,17 @@ public class ReplicationOption {
 
     public void setEndDate(LocalDate endDate) {
             this.endDate = endDate;
-            // Calculate noOfDays directly when setting the endDate
-            if (startDate != null && endDate != null) {
-                this.noOfDays = (int) ChronoUnit.DAYS.between(startDate, endDate);
-            }
-        }
+            calculateNoOfDays();
+
+    }
     
 
     public Integer getNoOfDays() {
-        calculateNoOfDays(); // Calculate no_of_days before returning the value
         return noOfDays;
     }
 
     public void setNoOfDays(Integer noOfDays) {
         this.noOfDays = noOfDays;
-        System.out.println("Setting noOfDays: " + noOfDays);
-
-        // Print the values used in the calculation
-        System.out.println("Start Date: " + startDate);
-        System.out.println("End Date before update: " + endDate);
-
-        // Update endDate based on startDate and noOfDays
-        if (startDate != null && noOfDays != null) {
-            this.endDate = startDate.plusDays(noOfDays);
-        }
-
-        System.out.println("End Date after update: " + endDate);
     }
 
 
