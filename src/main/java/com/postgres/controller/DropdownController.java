@@ -23,7 +23,9 @@ public class DropdownController {
 
     @PostMapping("/saveReplicationOption")
     public String saveReplicationOption(@ModelAttribute ReplicationOption replicationOption) {
-    	
+        // Calculate noOfDays first
+    	// Calculate noOfDays
+        replicationOption.calculateNoOfDays();
 
         // Set the chargeOfOneByte value
         replicationOption.setChargeOfOneByte(2);
@@ -41,4 +43,5 @@ public class DropdownController {
 
         return "Invoice";
     }
+
 }

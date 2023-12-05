@@ -11,8 +11,6 @@ public class ReplicationOptionListener {
     public void prePersist(ReplicationOption replicationOption) {
         replicationOption.setEndDate(LocalDate.now());
     }
-    
-
 }
 
 

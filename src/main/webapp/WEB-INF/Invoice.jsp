@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page import="java.util.List" %>
+<%@ page import="java.sql.*" %>
+<%@ page import="com.postgres.model.ReplicationOption" %>
 
 <!DOCTYPE html>
 <html>
@@ -17,10 +19,19 @@
     <!-- Add Bootstrap Datepicker CSS and JS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-
 </head>
 <body>
-<div class="card">
+<%
+    Connection con = null;
+    Statement st = null;
+    try {
+        Class.forName("org.postgresql.Driver");
+        con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/myDb", "postgres", "root");
+        st = con.createStatement();
+        ResultSet rs = st.executeQuery("select * from billing_user_details;");
+%>
+    
+            <div class="card">
     <div class="card-body">
       <div class="container mb-5 mt-3">
         <div class="row d-flex align-items-baseline">
@@ -68,30 +79,53 @@
               </ul>
             </div>
           </div>
-  
-          <div class="row my-2 mx-1 justify-content-center">
-            <table class="table table-striped table-borderless">
-              <thead style="background-color:#002b80 ;" class="text-white">
-                <tr>
-                  <th scope="col">User ID</th>
-                  <th scope="col">Replication Type</th>
-                  <th scope="col">Technique</th>
-                  <th scope="col">Flatfile</th>
-                  <th scope="col">Direction</th>
-                  <th scope="col">Start Date</th>
-                  <th scope="col">End Date</th>
-                  <th scope="col">No. of Days</th>
-                  <th scope="col">No. of Bytes used</th>
-                  <th scope="col">Amount</th>
-                </tr>
-              </thead>
-              <tbody>
-                
-            </tbody>
-  
-            </table>
-          </div>
-          <div class="row">
+
+            <div class="row my-2 mx-1 justify-content-center">
+                <table class="table table-striped table-borderless">
+                    <thead style="background-color:#002b80 ;" class="text-white">
+            <tr>
+                <th>ID</th>
+                <th>Technique</th>
+                <th>Direction</th>
+                <th>Replication Type</th>
+                <th>Flatfile</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>No. of Days</th>
+                <th>No. of Bytes</th>
+                <th>Charge of One Byte</th>
+                <th>Total Amount</th>
+            </tr>
+                    </thead>
+                    <tbody>
+                        <%
+                            while (rs.next()) {
+                        %>
+            <tr>
+                <td><%= rs.getString("id") %></td>
+                <td><%= rs.getString("technique") %></td>
+                <td><%= rs.getString("direction") %></td>
+                <td><%= rs.getString("replication_type") %></td>
+                <td><%= rs.getString("flatfile") %></td>
+                <td><%= rs.getString("start_date") %></td>
+                <td><%= rs.getString("end_date") %></td>
+                <td><%= rs.getString("no_of_days") %></td>
+                <td><%= rs.getString("number_of_bytes") %></td>
+                <td><%= rs.getString("charge_of_one_byte") %></td>
+                <td><%= rs.getString("total_amount") %></td>
+            </tr>
+                        <%
+                            } 
+                        %>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Rest of your HTML code -->
+
+        </div>
+    </div>
+              <div class="row">
             <div class="col-xl-8">
               <!-- <p class="ms-3">Add additional notes and payment information</p> -->
   
@@ -116,10 +150,24 @@
                 style="background-color:#60bdf3 ;">Pay Now</button>
             </div>
           </div>
+          </div>
+          </div>
   
-        </div>
-      </div>
-    </div>
-  </div>
+<%
+    } catch (Exception e) {
+        out.print(e.getMessage());
+    } finally {
+        try {
+            if (st != null) {
+                st.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        } catch (SQLException e) {
+            out.print(e.getMessage());
+        }
+    }
+%>
 </body>
-  </html>
+</html>

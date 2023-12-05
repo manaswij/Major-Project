@@ -33,8 +33,8 @@ public class ReplicationOption {
     @Column(name = "end_date")
     private LocalDate endDate;
 
-    @Column(name = "no_of_days")
-    private Long noOfDays;
+    @Column(name = "no_of_days", insertable = false, updatable = false)
+    private Integer noOfDays;
 
     @Column(name = "number_of_bytes")
     private Integer numberOfBytes;
@@ -51,7 +51,7 @@ public class ReplicationOption {
     public ReplicationOption() {
     }
 
-    public ReplicationOption(String technique, String direction, String replication_type, String flatfile, LocalDate startDate, LocalDate endDate, Long noOfDays, Integer numberOfBytes, Integer chargeOfOneByte, Double totalAmount) {
+    public ReplicationOption(String technique, String direction, String replication_type, String flatfile, LocalDate startDate, LocalDate endDate, Integer noOfDays, Integer numberOfBytes, Integer chargeOfOneByte, Double totalAmount) {
         this.technique = technique;
         this.direction = direction;
         this.replication_type = replication_type;
@@ -62,6 +62,14 @@ public class ReplicationOption {
         this.numberOfBytes = numberOfBytes;
         this.chargeOfOneByte = chargeOfOneByte;
         this.totalAmount = totalAmount;
+    }
+
+    public void calculateNoOfDays() {
+        if (startDate != null && endDate != null) {
+            noOfDays = (int) ChronoUnit.DAYS.between(startDate, endDate);
+        } else {
+            noOfDays = 10;
+        }
     }
 
     public void calculateTotalAmount() {
@@ -124,26 +132,37 @@ public class ReplicationOption {
         return endDate;
     }
 
+
     public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
-
-    public Long getNoOfDays() {
-        if (startDate != null && endDate != null) {
-            noOfDays = ChronoUnit.DAYS.between(startDate, endDate);
-            return noOfDays;
-        } else {
-            return null;
+            this.endDate = endDate;
+            // Calculate noOfDays directly when setting the endDate
+            if (startDate != null && endDate != null) {
+                this.noOfDays = (int) ChronoUnit.DAYS.between(startDate, endDate);
+            }
         }
+    
+
+    public Integer getNoOfDays() {
+        calculateNoOfDays(); // Calculate no_of_days before returning the value
+        return noOfDays;
     }
 
-    public void setNoOfDays(Long noOfDays) {
+    public void setNoOfDays(Integer noOfDays) {
         this.noOfDays = noOfDays;
+        System.out.println("Setting noOfDays: " + noOfDays);
+
+        // Print the values used in the calculation
+        System.out.println("Start Date: " + startDate);
+        System.out.println("End Date before update: " + endDate);
+
         // Update endDate based on startDate and noOfDays
         if (startDate != null && noOfDays != null) {
             this.endDate = startDate.plusDays(noOfDays);
         }
+
+        System.out.println("End Date after update: " + endDate);
     }
+
 
     public Integer getNumberOfBytes() {
         return numberOfBytes;
