@@ -4,12 +4,14 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -19,8 +21,8 @@ import jakarta.persistence.Table;
 public class ReplicationOption {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+    @Column(name = "replication_id")
+    private Long replicationId;
 
     private String technique;
     private String direction;
@@ -44,9 +46,13 @@ public class ReplicationOption {
 
     @Column(name = "total_amount")
     private Double totalAmount;
+    
+    @Column(name = "user_id")
+    private Integer userId;
 
-    @OneToMany(mappedBy = "replicationOption")
-    private List<UsersModel> users;
+    @OneToMany(mappedBy = "replicationOption", cascade = CascadeType.ALL)
+    private List<UsersModel> userModels;
+
 
     public ReplicationOption() {
     }
@@ -81,11 +87,11 @@ public class ReplicationOption {
     // Getter and setter methods...
 
     public Long getId() {
-        return id;
+        return replicationId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long replicationId) {
+        this.replicationId = replicationId;
     }
 
     public String getTechnique() {
@@ -172,4 +178,21 @@ public class ReplicationOption {
     public void setTotalAmount(Double totalAmount) {
         this.totalAmount = totalAmount;
     }
+    
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer user_id) {
+        this.userId = userId;
+    }
+
+    public List<UsersModel> getUserModels() {
+        return userModels;
+    }
+
+    public void setUserModels(List<UsersModel> userModels) {
+        this.userModels = userModels;
+    }
+
 }
