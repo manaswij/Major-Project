@@ -23,8 +23,9 @@ private Integer id;
 	String email;
 	
 	 @ManyToOne
-	 @JoinColumn(name = "id", insertable = false, updatable = false)
+	 @JoinColumn(name = "replication_option_id") // Use a different name for clarity
 	 private ReplicationOption replicationOption;
+	 
 	 
 	// Getter and setter methods...
 	
