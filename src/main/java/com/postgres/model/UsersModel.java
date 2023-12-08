@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -20,8 +21,9 @@ public class UsersModel {
 	String password;
 	String email;
 	
-	 @ManyToOne
-	 private ReplicationOption replicationOption;
+	@ManyToOne
+    @JoinColumn(name = "user_id")  // This should match the column name in ReplicationOption
+    private ReplicationOption replicationOption;
 	 
 	 
 	// Getter and setter methods...
