@@ -13,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -47,11 +48,11 @@ public class ReplicationOption {
     @Column(name = "total_amount")
     private Double totalAmount;
     
-    @Column(name = "user_id")
+    @Column(name = "user_id", unique = true)
     private Integer userId;
 
-    @OneToMany(mappedBy = "replicationOption", cascade = CascadeType.ALL)
-    private List<UsersModel> userModels;
+    @OneToOne(mappedBy = "replicationOption", cascade = CascadeType.ALL)
+    private UsersModel usersModel;
 
 
     public ReplicationOption() {
@@ -183,16 +184,16 @@ public class ReplicationOption {
         return userId;
     }
 
-    public void setUserId(Integer user_id) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public List<UsersModel> getUserModels() {
-        return userModels;
+    public UsersModel getUsersModel() {
+        return usersModel;
     }
 
-    public void setUserModels(List<UsersModel> userModels) {
-        this.userModels = userModels;
+    public void setUsersModel(UsersModel usersModel) {
+        this.usersModel = usersModel;
     }
 
 }
