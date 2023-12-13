@@ -102,7 +102,7 @@
                             while (rs.next()) {
                         %>
             <tr>
-                <td><%= rs.getString("id") %></td>
+                <td><%= rs.getString("replication_id") %></td>
                 <td><%= rs.getString("technique") %></td>
                 <td><%= rs.getString("direction") %></td>
                 <td><%= rs.getString("replication_type") %></td>

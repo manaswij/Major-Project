@@ -5,35 +5,32 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "users1_table")
+@Table(name = "users2_table")
 public class UsersModel {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID")
-  
-private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
+    private Integer userId;
 	String login;
 	String username;
 	String password;
 	String email;
 	
 	 @ManyToOne
-	 @JoinColumn(name = "replication_option_id") // Use a different name for clarity
 	 private ReplicationOption replicationOption;
 	 
 	 
 	// Getter and setter methods...
 	
 	public Integer getId() {
-		return id;
+		return userId;
 	}
-	public void setId(Integer id) {
-		this.id = id;
+	public void setId(Integer userId) {
+		this.userId = userId;
 	}
 	public String getLogin() {
 		return login;
@@ -60,6 +57,14 @@ private Integer id;
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public ReplicationOption getReplicationOption() {
+        return replicationOption;
+    }
+
+    public void setReplicationOption(ReplicationOption replicationOption) {
+        this.replicationOption = replicationOption;
+    }
 	
 }
 	
