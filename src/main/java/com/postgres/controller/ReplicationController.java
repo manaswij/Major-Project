@@ -7,13 +7,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.postgres.model.ReplicationOption;
+import com.postgres.model.UsersModel;
 import com.postgres.service.ReplicationOptionService;
+import com.postgres.service.UsersService;
 
 @Controller
 public class ReplicationController {
 
+	 @Autowired
+	    private ReplicationOptionService replicationService;
+
     @Autowired
-    private ReplicationOptionService replicationService;
+    private UsersService usersService; // Add this line
 
     @GetMapping("/")
     public String homepage(Model model) {
@@ -35,10 +40,21 @@ public class ReplicationController {
 
         // Save the replication option
         replicationService.saveReplicationOptions(replicationOption);
+        
+        // Creating instances
+        UsersModel usersModel = new UsersModel();
 
-        System.out.println("Received Direction: " + replicationOption.getDirection());
-        System.out.println("Received Start Date: " + replicationOption.getStartDate());
-        System.out.println("Received End Date: " + replicationOption.getEndDate());
+        // Set the relationship in both directions
+        replicationOption.setUsersModel(usersModel);
+        usersModel.setReplicationOption(replicationOption);
+
+        // Save both entities
+        usersService.registerUser(usersModel);
+        replicationService.saveReplicationOptions(replicationOption);
+
+        //System.out.println("Received Direction: " + replicationOption.getDirection());
+        //System.out.println("Received Start Date: " + replicationOption.getStartDate());
+        //System.out.println("Received End Date: " + replicationOption.getEndDate());
         System.out.println("No of days: " + replicationOption.getNoOfDays());
 
         return "Invoice";

@@ -87,11 +87,11 @@ public class ReplicationOption {
 
     // Getter and setter methods...
 
-    public Long getId() {
+    public Long getReplicationId() {
         return replicationId;
     }
 
-    public void setId(Long replicationId) {
+    public void setReplicationId(Long replicationId) {
         this.replicationId = replicationId;
     }
 

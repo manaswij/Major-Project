@@ -1,5 +1,6 @@
 package com.postgres.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,16 +26,16 @@ public class UsersModel {
 	@OneToOne
 	@JoinColumn(name = "replication_id", referencedColumnName = "replication_id")
 	private ReplicationOption replicationOption;
-	 
-	 
+	
 	// Getter and setter methods...
 	
-	public Integer getId() {
-		return userId;
-	}
-	public void setId(Integer userId) {
-		this.userId = userId;
-	}
+	public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 	public String getLogin() {
 		return login;
 	}
@@ -61,13 +62,13 @@ public class UsersModel {
 		this.email = email;
 	}
 	
-	public ReplicationOption getReplicationOption() {
-        return replicationOption;
-    }
+	  public ReplicationOption getReplicationOption() {
+	        return replicationOption;
+	    }
 
-    public void setReplicationOption(ReplicationOption replicationOption) {
-        this.replicationOption = replicationOption;
-    }
+	    public void setReplicationOption(ReplicationOption replicationOption) {
+	        this.replicationOption = replicationOption;
+	    }
 	
 }
 	
