@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.postgres.model.ReplicationOption;
 
-public interface DropdownRepo extends JpaRepository<ReplicationOption, Long> {
+public interface ReplicationRepo extends JpaRepository<ReplicationOption, Long> {
 }
 
 

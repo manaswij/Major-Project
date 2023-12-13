@@ -5,13 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.postgres.model.ReplicationOption;
-import com.postgres.repository.DropdownRepo;
+import com.postgres.repository.ReplicationRepo;
 
 @Service
 public class ReplicationOptionService {
 
     @Autowired
-    private DropdownRepo dropdownRepo;
+    private ReplicationRepo dropdownRepo;
 
     public void saveReplicationOptions(ReplicationOption replicationOption) {
         dropdownRepo.save(replicationOption);

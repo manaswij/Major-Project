@@ -10,7 +10,7 @@ import com.postgres.model.ReplicationOption;
 import com.postgres.service.ReplicationOptionService;
 
 @Controller
-public class DropdownController {
+public class ReplicationController {
 
     @Autowired
     private ReplicationOptionService replicationService;
