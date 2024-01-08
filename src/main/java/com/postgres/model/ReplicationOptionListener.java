@@ -11,8 +11,9 @@ public class ReplicationOptionListener {
     public void prePersist(ReplicationOption replicationOption) {
         replicationOption.setEndDate(LocalDate.now());
         replicationOption.calculateNoOfDays();
-
+        UsersModel usersModel = replicationOption.getUsersModel();
+        if (usersModel != null) {
+            replicationOption.setUserId(usersModel.getUserId());
+        }
     }
 }
-
-

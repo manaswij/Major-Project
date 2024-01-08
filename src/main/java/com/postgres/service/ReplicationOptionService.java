@@ -7,7 +7,11 @@ import org.springframework.stereotype.Service;
 import com.postgres.model.ReplicationOption;
 import com.postgres.repository.ReplicationRepo;
 
+import jakarta.transaction.Transactional;
+
 @Service
+
+
 public class ReplicationOptionService {
 
     @Autowired

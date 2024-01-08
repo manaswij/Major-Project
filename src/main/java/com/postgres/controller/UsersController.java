@@ -45,10 +45,14 @@ public class UsersController {
     user.setPassword(usersModel.getPassword());
     user.setEmail(usersModel.getEmail());
     user.setUsername(usersModel.getUsername());
-    System.out.println("User Creates ");
+    System.out.println("User is Created ");
 
-    // Save the user to the database
-    userService.registerUser(user);
+//    // Save the user to the database
+//    userService.registerUser(user);
+ // Save the user to the database
+    UsersModel savedUser = userService.registerUser(user);
+ // Set the user ID in the original usersModel
+    usersModel.setUserId(savedUser.getUserId());
 
     // Redirect to a success page or login page
     return "redirect:/login";

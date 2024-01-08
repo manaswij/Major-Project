@@ -29,7 +29,6 @@ public class ReplicationController {
     @PostMapping("/saveReplicationOption")
     public String saveReplicationOption(@ModelAttribute ReplicationOption replicationOption) {
         // Calculate noOfDays first
-    	// Calculate noOfDays
         replicationOption.calculateNoOfDays();
 
         // Set the chargeOfOneByte value
@@ -40,24 +39,20 @@ public class ReplicationController {
 
         // Save the replication option
         replicationService.saveReplicationOptions(replicationOption);
-        
+
         // Creating instances
         UsersModel usersModel = new UsersModel();
 
-        // Set the relationship in both directions
+        // Set the relationship in one direction
         replicationOption.setUsersModel(usersModel);
-        usersModel.setReplicationOption(replicationOption);
 
-        // Save both entities
+        // Save both entities within the same transaction
         usersService.registerUser(usersModel);
-        replicationService.saveReplicationOptions(replicationOption);
 
-        //System.out.println("Received Direction: " + replicationOption.getDirection());
-        //System.out.println("Received Start Date: " + replicationOption.getStartDate());
-        //System.out.println("Received End Date: " + replicationOption.getEndDate());
-        System.out.println("No of days: " + replicationOption.getNoOfDays());
+        // Ensure that the relationship is set in both directions
+        usersModel.setReplicationOption(replicationOption);
+        replicationService.saveReplicationOptions(replicationOption);
 
         return "Invoice";
     }
-
 }

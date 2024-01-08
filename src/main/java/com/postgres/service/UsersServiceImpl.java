@@ -1,14 +1,15 @@
 package com.postgres.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.postgres.model.UsersModel;
 import com.postgres.repository.UsersRepository;
+import com.postgres.service.ReplicationOptionService; // Import ReplicationOptionService
 
 import jakarta.persistence.NonUniqueResultException;
 
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class UsersServiceImpl implements UsersService {
@@ -16,8 +17,15 @@ public class UsersServiceImpl implements UsersService {
     @Autowired
     private UsersRepository userRepository;
 
+    @Autowired
+    private ReplicationOptionService replicationService; // Inject ReplicationOptionService
+
     @Override
     public UsersModel registerUser(UsersModel user) {
+        // Make sure the replicationOption is saved before the user
+        if (user.getReplicationOption() != null) {
+            replicationService.saveReplicationOptions(user.getReplicationOption());
+        }
         return userRepository.save(user);
     }
 
