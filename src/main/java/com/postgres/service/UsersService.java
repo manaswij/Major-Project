@@ -38,4 +38,5 @@ import com.postgres.model.UsersModel;
 public interface UsersService {
     UsersModel registerUser(UsersModel user);
     UsersModel authenticateUser(String username, String password);
+    
 }

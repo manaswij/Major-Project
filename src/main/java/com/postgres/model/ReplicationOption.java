@@ -12,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -51,7 +52,8 @@ public class ReplicationOption {
     @Column(name = "user_id", unique = true)
     private Integer userId;
 
-    @OneToOne(mappedBy = "replicationOption", cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "user_Ide", referencedColumnName = "user_id")
     private UsersModel usersModel;
 
 
@@ -193,7 +195,14 @@ public class ReplicationOption {
     }
 
     public void setUsersModel(UsersModel usersModel) {
-        this.usersModel = usersModel;
-    }
+        if (this.usersModel != null) {
+            this.usersModel.getReplicationOptions().remove(this); // Avoid recursion
+        }
 
+        this.usersModel = usersModel;
+
+        if (usersModel != null && !usersModel.getReplicationOptions().contains(this)) {
+            usersModel.getReplicationOptions().add(this); // Maintain the bidirectional relationship
+        }
+    }
 }

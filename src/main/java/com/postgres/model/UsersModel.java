@@ -1,13 +1,18 @@
 package com.postgres.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -23,10 +28,8 @@ public class UsersModel {
 	String password;
 	String email;
 	
-	@OneToOne
-	@JoinColumn(name = "replication_id", referencedColumnName = "replication_id")
-	private ReplicationOption replicationOption;
-	
+	@OneToMany(mappedBy = "usersModel",fetch = FetchType.EAGER) // Add fetch type
+	private List<ReplicationOption> replicationOptions = new ArrayList<>();
 	// Getter and setter methods...
 	
 	public Integer getUserId() {
@@ -62,13 +65,21 @@ public class UsersModel {
 		this.email = email;
 	}
 	
-	  public ReplicationOption getReplicationOption() {
-	        return replicationOption;
-	    }
+	public List<ReplicationOption> getReplicationOptions() {
+        return replicationOptions;
+    }
 
-	    public void setReplicationOption(ReplicationOption replicationOption) {
-	        this.replicationOption = replicationOption;
-	    }
+    public void setReplicationOptions(List<ReplicationOption> replicationOptions) {
+        this.replicationOptions = replicationOptions;
+    }
+    
+ // Add this method to add a single ReplicationOption to the list
+    public void addReplicationOption(ReplicationOption replicationOption) {
+        if (!replicationOptions.contains(replicationOption)) {
+            replicationOptions.add(replicationOption);
+            replicationOption.setUsersModel(this); // Maintain the bidirectional relationship
+        }
+    }
 	
 }
 	

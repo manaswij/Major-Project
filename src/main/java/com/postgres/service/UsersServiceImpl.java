@@ -3,6 +3,7 @@ package com.postgres.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.postgres.model.ReplicationOption;
 import com.postgres.model.UsersModel;
 import com.postgres.repository.UsersRepository;
 import com.postgres.service.ReplicationOptionService; // Import ReplicationOptionService
@@ -23,8 +24,10 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public UsersModel registerUser(UsersModel user) {
         // Make sure the replicationOption is saved before the user
-        if (user.getReplicationOption() != null) {
-            replicationService.saveReplicationOptions(user.getReplicationOption());
+        if (user.getReplicationOptions() != null) {
+            for (ReplicationOption replicationOption : user.getReplicationOptions()) {
+                replicationService.saveReplicationOptions(replicationOption);
+            }
         }
         return userRepository.save(user);
     }
