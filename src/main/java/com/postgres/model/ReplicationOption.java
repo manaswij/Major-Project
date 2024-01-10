@@ -3,6 +3,7 @@ package com.postgres.model;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Random;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -15,6 +16,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 @Entity
@@ -51,6 +53,10 @@ public class ReplicationOption {
     
     @Column(name = "user_id", unique = true)
     private Integer userId;
+    
+    @Column(name = "common_id2", unique = true, nullable = false)
+    private int commonId2; // Add common ID column
+
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_Ide", referencedColumnName = "user_id")
@@ -86,6 +92,16 @@ public class ReplicationOption {
             totalAmount = (double) (numberOfBytes * chargeOfOneByte);
         }
     }
+    
+    // Add this method to set commonId2 before persisting
+    @PrePersist
+    public void setCommonId2() {
+        if (this.usersModel != null) {
+            this.commonId2 = this.usersModel.getCommonId();
+        }
+    }
+
+
 
     // Getter and setter methods...
 
@@ -205,4 +221,15 @@ public class ReplicationOption {
             usersModel.getReplicationOptions().add(this); // Maintain the bidirectional relationship
         }
     }
+    
+    public int getCommonId2() {
+        return commonId2;
+    }
+
+    public void setCommonId2(int commonId2) {
+        this.commonId2 = commonId2;
+    }
+    
+   
+	
 }

@@ -35,28 +35,23 @@ public class ReplicationController {
         // Set the chargeOfOneByte value
         replicationOption.setChargeOfOneByte(2);
 
-        // Calculate Total Amount based on numberOfBytes and chargeOfOneByte
-        replicationOption.calculateTotalAmount();
-
-        replicationService.saveReplicationOptions(replicationOption);
-
+        // Create UsersModel and persist it to generate commonId
         UsersModel usersModel = new UsersModel();
-
-        // Save the user first
         usersService.registerUser(usersModel);
 
         // Set the relationship in one direction
         replicationOption.setUsersModel(usersModel);
 
-        // Save both entities within the same transaction
+        // Calculate Total Amount based on numberOfBytes and chargeOfOneByte
+        replicationOption.calculateTotalAmount();
+
+        // Save the ReplicationOption after commonId has been generated
         replicationService.saveReplicationOptions(replicationOption);
 
         // Ensure that the relationship is set in both directions (if needed)
         usersModel.addReplicationOption(replicationOption);
 
-        // usersService.registerUser(usersModel); // Remove this line as it's redundant
-
         return "Invoice";
-        
     }
+
 }
