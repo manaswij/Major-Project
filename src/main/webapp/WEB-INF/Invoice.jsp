@@ -2,6 +2,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="com.postgres.model.ReplicationOption" %>
+<%@ page import="com.postgres.service.UsersService" %> <!-- Import UsersService -->
+<%@ page import="com.postgres.model.UsersModel" %> <!-- Import UsersService -->
 
 <!DOCTYPE html>
 <html>
@@ -22,13 +24,25 @@
 </head>
 <body>
 <%
-    Connection con = null;
-    Statement st = null;
-    try {
-        Class.forName("org.postgresql.Driver");
-        con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/myDb", "postgres", "root");
-        st = con.createStatement();
-        ResultSet rs = st.executeQuery("select * from billing_user_details;");
+UsersService userService = new com.postgres.service.UsersServiceImpl(); // Instantiate UsersService
+UsersModel loggedInUser = userService.getLoggedInUser(session); // Get logged-in user
+int userId = loggedInUser != null ? loggedInUser.getUserId() : -1; // Get user_id
+
+System.out.println("Logged-in User ID (from session): " + userId);
+
+if (loggedInUser != null) {
+    out.println("User Details: " + loggedInUser.getUserId() + " - " + loggedInUser.getEmail());
+} else {
+    out.println("No user details found in the session.");
+}
+Connection con = null;
+Statement st = null;
+try {
+    Class.forName("org.postgresql.Driver");
+    con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/myDb", "postgres", "root");
+    st = con.createStatement();
+    ResultSet rs = st.executeQuery("SELECT * FROM billing_user_details WHERE user_id = " + userId + ";");
+
 %>
     
             <div class="card">
@@ -102,7 +116,7 @@
                             while (rs.next()) {
                         %>
             <tr>
-                <td><%= rs.getString("replication_id") %></td>
+                <td><%= rs.getString("user_id") %></td>
                 <td><%= rs.getString("technique") %></td>
                 <td><%= rs.getString("direction") %></td>
                 <td><%= rs.getString("replication_type") %></td>
@@ -113,6 +127,7 @@
                 <td><%= rs.getString("number_of_bytes") %></td>
                 <td><%= rs.getString("charge_of_one_byte") %></td>
                 <td><%= rs.getString("total_amount") %></td>
+                
             </tr>
                         <%
                             } 
@@ -154,20 +169,20 @@
           </div>
   
 <%
-    } catch (Exception e) {
-        out.print(e.getMessage());
-    } finally {
-        try {
-            if (st != null) {
-                st.close();
-            }
-            if (con != null) {
-                con.close();
-            }
-        } catch (SQLException e) {
-            out.print(e.getMessage());
+} catch (Exception e) {
+    out.print(e.getMessage());
+} finally {
+    try {
+        if (st != null) {
+            st.close();
         }
+        if (con != null) {
+            con.close();
+        }
+    } catch (SQLException e) {
+        out.print(e.getMessage());
     }
+}
 %>
 </body>
 </html>

@@ -51,15 +51,14 @@ public class ReplicationOption {
     @Column(name = "total_amount")
     private Double totalAmount;
     
-    @Column(name = "user_id", unique = true)
-    private Integer userId;
+   
     
     @Column(name = "common_id2", unique = true, nullable = false)
     private int commonId2; // Add common ID column
 
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "user_Ide", referencedColumnName = "user_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private UsersModel usersModel;
 
 
@@ -198,13 +197,13 @@ public class ReplicationOption {
         this.totalAmount = totalAmount;
     }
     
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
+//    public Integer getUserId() {
+//        return userId;
+//    }
+//
+//    public void setUserId(Integer userId) {
+//        this.userId = userId;
+//    }
 
     public UsersModel getUsersModel() {
         return usersModel;

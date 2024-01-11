@@ -38,32 +38,36 @@ public class UsersController {
 
     @PostMapping("/register")
     public String register(@ModelAttribute UsersModel usersModel) {
-    // Create a UsersModel instance and set the necessary fields
-    UsersModel user = new UsersModel();
-    //user.setId(1); // Set a valid ID or use appropriate logic to generate IDs
-    user.setLogin(usersModel.getLogin());
-    user.setPassword(usersModel.getPassword());
-    user.setEmail(usersModel.getEmail());
-    user.setUsername(usersModel.getUsername());
-    System.out.println("User is Created ");
+        // Check if the user already exists
+        UsersModel existingUser = userService.getUserByUsername(usersModel.getUsername());
+        if (existingUser != null) {
+            // Handle the case where the user already exists
+            // You might want to redirect to a registration failure page or show an error message
+            return "redirect:/registration-failure";
+        }
 
-//    // Save the user to the database
-//    userService.registerUser(user);
- // Save the user to the database
-    UsersModel savedUser = userService.registerUser(user);
- // Set the user ID in the original usersModel
-    usersModel.setUserId(savedUser.getUserId());
+     // Create a new user
+        UsersModel user = new UsersModel();
+        user.setLogin(usersModel.getLogin());
+        user.setPassword(usersModel.getPassword());
+        user.setEmail(usersModel.getEmail());
+        user.setUsername(usersModel.getUsername());
+        System.out.println("User is Created ");
 
-    // Redirect to a success page or login page
-    return "redirect:/login";
-}
+        // Save the user to the database
+        UsersModel savedUser = userService.registerUser(user);
+        usersModel.setUserId(savedUser.getUserId());
+
+        return "redirect:/login";
+    }
 
     @PostMapping("/login")
     public String login(@ModelAttribute UsersModel user, Model model, HttpSession session) {
         UsersModel authenticatedUser = userService.authenticateUser(user.getUsername(), user.getPassword());
-        System.out.println("User is "+ authenticatedUser);
+        System.out.println("Authenticated User: " + authenticatedUser);
+
         if (authenticatedUser != null) {
-        	session.setAttribute("user", authenticatedUser);
+            session.setAttribute("user", authenticatedUser);
             model.addAttribute("user", authenticatedUser);
             return "redirect:/welcome";
         } else {
@@ -71,6 +75,11 @@ public class UsersController {
             return "Login";
         }
     }
+
+
+
+
+
     
    
    
