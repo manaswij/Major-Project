@@ -42,6 +42,7 @@ public interface UsersService {
     UsersModel authenticateUser(String username, String password);
     UsersModel getUserByUsername(String username);
     UsersModel getUserByUserId(int userId);
+ 
     UsersModel getLoggedInUser(HttpSession session);
 
 }

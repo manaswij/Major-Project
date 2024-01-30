@@ -2,8 +2,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="com.postgres.model.ReplicationOption" %>
-<%@ page import="com.postgres.service.UsersService" %> <!-- Import UsersService -->
-<%@ page import="com.postgres.model.UsersModel" %> <!-- Import UsersService -->
 
 <!DOCTYPE html>
 <html>
@@ -24,25 +22,19 @@
 </head>
 <body>
 <%
-UsersService userService = new com.postgres.service.UsersServiceImpl(); // Instantiate UsersService
-UsersModel loggedInUser = userService.getLoggedInUser(session); // Get logged-in user
-int userId = loggedInUser != null ? loggedInUser.getUserId() : -1; // Get user_id
-
-System.out.println("Logged-in User ID (from session): " + userId);
-
-if (loggedInUser != null) {
-    out.println("User Details: " + loggedInUser.getUserId() + " - " + loggedInUser.getEmail());
-} else {
-    out.println("No user details found in the session.");
-}
 Connection con = null;
 Statement st = null;
 try {
     Class.forName("org.postgresql.Driver");
     con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/myDb", "postgres", "root");
     st = con.createStatement();
-    ResultSet rs = st.executeQuery("SELECT * FROM billing_user_details WHERE user_id = " + userId + ";");
 
+    // Assuming userId is the user ID you want to filter by
+
+    // Use a PreparedStatement to avoid SQL injection
+    PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM billing_user_details");
+
+    ResultSet rs = preparedStatement.executeQuery();
 %>
     
             <div class="card">
@@ -50,7 +42,7 @@ try {
       <div class="container mb-5 mt-3">
         <div class="row d-flex align-items-baseline">
           <div class="col-xl-9">
-            <p style="color: #7e8d9f;font-size: 20px;">Invoice New>> <strong>ID: #123-123</strong></p>
+            <p style="color: #7e8d9f;font-size: 20px;">Invoice New>> <strong>ID: 4897</strong></p>
           </div>
           <div class="col-xl-3 float-end">
             <a class="btn btn-light text-capitalize border-0" data-mdb-ripple-color="dark"><i
@@ -74,7 +66,7 @@ try {
           <div class="row">
             <div class="col-xl-8">
               <ul class="list-unstyled">
-                <li class="text-muted">Name: <span style="color:#5d9fc5 ;">John Lorem</span></li>
+                <li class="text-muted">Username: <span style="color:#5d9fc5 ;">John</span></li>
                 <li class="text-muted">Email Id: <span style="color:#5d9fc5 ;">johndoe@gmail.com</span></li>
               </ul>
             </div>
@@ -82,11 +74,11 @@ try {
               <p class="text-muted">Invoice</p>
               <ul class="list-unstyled">
                 <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
-                    class="fw-bold">ID:</span>#123-456</li>
+                    class="fw-bold">User ID:</span>2829</li>
                 <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
-                    class="fw-bold">Creation Date: </span>Jun 23,2021</li>
+                    class="fw-bold">Creation Date: </span>Dec 23,2023</li>
                 <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
-                    class="fw-bold">End Date: </span>Jun 23,2021</li>
+                    class="fw-bold">End Date: </span>Jan 12,2024</li>
                 <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
                     class="me-1 fw-bold">Status:</span><span class="badge bg-warning text-black fw-bold">
                     Unpaid</span></li>
@@ -116,7 +108,7 @@ try {
                             while (rs.next()) {
                         %>
             <tr>
-                <td><%= rs.getString("user_id") %></td>
+                <td><%= rs.getString("common_id2") %></td>
                 <td><%= rs.getString("technique") %></td>
                 <td><%= rs.getString("direction") %></td>
                 <td><%= rs.getString("replication_type") %></td>
@@ -150,39 +142,39 @@ try {
                 <li class="text-muted ms-3"><span class="text-black me-4">SubTotal</span>$1110</li>
                 <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Tax(15%)</span>$111</li>
               </ul> -->
-              <p class="text-black float-start"><span class="text-black me-3"> Total Amount: </span>
+              <p class="text-black float-start"><span class="text-black me-3"> Total Amount: Rs 200/-</span>
                 <!-- <span
                   style="font-size: 25px;">$1221</span></p> -->
             </div>
           </div>
           <hr>
           <div class="row">
-            <div class="col-xl-10">
-              <p>Thank you for your purchase</p>
+            <div class="col-xl-10" >
+              <h5 style="margin-left:40%; margin-top:20px">Thank you for your purchase!</h5>
             </div>
             <div class="col-xl-2">
-              <button type="button" class="btn btn-primary text-capitalize"
-                style="background-color:#60bdf3 ;">Pay Now</button>
+              <button type="button" class="btn btn-success mt-3"
+                style="margin-left:-90%; margin-top:20px">Pay Now</button>
             </div>
           </div>
           </div>
           </div>
   
 <%
-} catch (Exception e) {
-    out.print(e.getMessage());
-} finally {
-    try {
-        if (st != null) {
-            st.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        // Close resources
+        try {
+            if (st != null) {
+                st.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        if (con != null) {
-            con.close();
-        }
-    } catch (SQLException e) {
-        out.print(e.getMessage());
     }
-}
 %>
 </body>
-</html>

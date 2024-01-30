@@ -49,6 +49,8 @@ public class UsersController {
      // Create a new user
         UsersModel user = new UsersModel();
         user.setLogin(usersModel.getLogin());
+        System.out.println("Login Value Before Insert: " + user.getLogin());
+
         user.setPassword(usersModel.getPassword());
         user.setEmail(usersModel.getEmail());
         user.setUsername(usersModel.getUsername());
@@ -64,7 +66,7 @@ public class UsersController {
     @PostMapping("/login")
     public String login(@ModelAttribute UsersModel user, Model model, HttpSession session) {
         UsersModel authenticatedUser = userService.authenticateUser(user.getUsername(), user.getPassword());
-        System.out.println("Authenticated User: " + authenticatedUser);
+        System.out.println("Authenticated User: " + user.getUsername() + " with ID: " + user.getUserId());
 
         if (authenticatedUser != null) {
             session.setAttribute("user", authenticatedUser);
