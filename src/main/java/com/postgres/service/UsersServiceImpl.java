@@ -21,6 +21,8 @@ public class UsersServiceImpl implements UsersService {
 
     @Autowired
     private ReplicationOptionService replicationService; // Inject ReplicationOptionService
+    
+    
 
     @Override
     public UsersModel registerUser(UsersModel user) {

@@ -47,7 +47,8 @@ public class UsersModel {
     }
 
     public Integer getUserId() {
-        return userId;
+        System.out.println("Authentic: "+ userId);
+        return this.userId;
     }
 
     public void setUserId(Integer userId) {

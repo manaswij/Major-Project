@@ -66,11 +66,12 @@ public class UsersController {
     @PostMapping("/login")
     public String login(@ModelAttribute UsersModel user, Model model, HttpSession session) {
         UsersModel authenticatedUser = userService.authenticateUser(user.getUsername(), user.getPassword());
-        System.out.println("Authenticated User: " + user.getUsername() + " with ID: " + user.getUserId());
+        System.out.println("Authentic: " + authenticatedUser);
 
         if (authenticatedUser != null) {
             session.setAttribute("user", authenticatedUser);
             model.addAttribute("user", authenticatedUser);
+            System.out.println("Authenticated User: " + authenticatedUser.getUsername() + " with id: " + authenticatedUser.getUserId());
             return "redirect:/welcome";
         } else {
             model.addAttribute("errorMsg", "Invalid credentials. Please register.");
