@@ -19,11 +19,29 @@
     <!-- Add Bootstrap Datepicker CSS and JS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.0/html2pdf.bundle.min.js"></script>
+    
+    <style>
+    /* Add this style to your existing styles or in the head section */
+    .btn-light {
+        background-color: #e2e2e2 !important;
+        color: #000000 !important; /* Change the text color if needed */
+    }
+
+    .btn-light:hover {
+        background-color: #F2F2F2 !important;
+        color: #000000 !important; /* Change the text color if needed */
+    }
+</style>
+    
 </head>
 <body>
 <%
+
 Connection con = null;
 Statement st = null;
+double grandTotal = 0.0; // Initialize grand total variable
+
 try {
     Class.forName("org.postgresql.Driver");
     con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/myDb", "postgres", "root");
@@ -37,19 +55,18 @@ try {
     ResultSet rs = preparedStatement.executeQuery();
 %>
     
+    
             <div class="card">
     <div class="card-body">
       <div class="container mb-5 mt-3">
         <div class="row d-flex align-items-baseline">
-          <div class="col-xl-9">
-            <p style="color: #7e8d9f;font-size: 20px;">Invoice New>> <strong>ID: 4897</strong></p>
-          </div>
+          
           <div class="col-xl-3 float-end">
-            <a class="btn btn-light text-capitalize border-0" data-mdb-ripple-color="dark"><i
-                class="fas fa-print text-primary"></i> Print</a>
-            <a class="btn btn-light text-capitalize" data-mdb-ripple-color="dark"><i
-                class="far fa-file-pdf text-danger"></i> Export</a>
-          </div>
+    <a class="btn btn-light text-capitalize border-0" data-mdb-ripple-color="dark" style="background-color: #e2e2e2;">
+        <i class="fas fa-print text-primary" id="download"></i> Download PDF
+    </a>
+</div>
+
           <hr>
         </div>
   
@@ -57,7 +74,7 @@ try {
           <div class="col-md-12">
             <div class="text-center">
               <i class="fab fa-mdb fa-4x ms-0" style="color:#5d9fc5 ;"></i>
-              <p class="pt-0">Billing Module</p>
+              <h4 class="pt-0">Invoice Details</h4>
             </div>
   
           </div>
@@ -70,15 +87,10 @@ try {
                 <li class="text-muted">Email Id: <span style="color:#5d9fc5 ;">johndoe@gmail.com</span></li>
               </ul>
             </div>
-            <div class="col-xl-4">
-              <p class="text-muted">Invoice</p>
+            <div class="col-xl-4" id = "invoice">
               <ul class="list-unstyled">
                 <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
-                    class="fw-bold">User ID:</span>2829</li>
-                <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
-                    class="fw-bold">Creation Date: </span>Dec 23,2023</li>
-                <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
-                    class="fw-bold">End Date: </span>Jan 12,2024</li>
+                    class="fw-bold">Invoice Id:</span>2829</li>
                 <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
                     class="me-1 fw-bold">Status:</span><span class="badge bg-warning text-black fw-bold">
                     Unpaid</span></li>
@@ -105,8 +117,13 @@ try {
                     </thead>
                     <tbody>
                         <%
-                            while (rs.next()) {
-                        %>
+                        while (rs.next()) {
+                            // ... Existing code for displaying rows ...
+
+                            // Get the total amount for each row and add it to the grand total
+                            double totalAmount = Double.parseDouble(rs.getString("total_amount"));
+                            grandTotal += totalAmount;
+                                                %>
             <tr>
                 <td><%= rs.getString("common_id2") %></td>
                 <td><%= rs.getString("technique") %></td>
@@ -142,7 +159,8 @@ try {
                 <li class="text-muted ms-3"><span class="text-black me-4">SubTotal</span>$1110</li>
                 <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Tax(15%)</span>$111</li>
               </ul> -->
-              <p class="text-black float-start"><span class="text-black me-3"> Total Amount: Rs 200/-</span>
+              <p class="text-black float-start">
+        <span class="text-black me-3"> Grand Total: Rs <%= grandTotal %> /-</span>
                 <!-- <span
                   style="font-size: 25px;">$1221</span></p> -->
             </div>
@@ -152,13 +170,34 @@ try {
             <div class="col-xl-10" >
               <h5 style="margin-left:40%; margin-top:20px">Thank you for your purchase!</h5>
             </div>
-            <div class="col-xl-2">
-              <button type="button" class="btn btn-success mt-3"
-                style="margin-left:-90%; margin-top:20px">Pay Now</button>
-            </div>
+            <!-- Pay Now button linking to payment.jsp -->
+			<div class="col-xl-2">
+        <a href="/payment" class="btn btn-success mt-3" style="margin-left: -90%; margin-top: 20px">Pay Now</a>
+    </div>
+</div>
+
           </div>
           </div>
           </div>
+          
+          <script>
+    $(document).ready(function () {
+        // Add click event listener to the Download PDF button
+        $(".btn-light").click(function () {
+            // Get the HTML content of the page
+            var content = document.documentElement.outerHTML;
+
+            // Use html2pdf library to generate PDF
+            html2pdf(content, {
+                margin: 10,
+                filename: 'invoice.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            });
+        });
+    });
+</script>
   
 <%
     } catch (Exception e) {

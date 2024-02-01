@@ -61,9 +61,11 @@
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <a class="nav-link" href="login.jsp">
-                    <button class="btn btn-outline-success my-2 my-sm-0 text-white">Logout</button>
+                <div class="nav-link">
+                <a href="/login" class="btn btn-outline-success my-2 my-sm-0 text-white" >
+                  Logout
                 </a>
+                </div>               
             </form>
         </div>
     </nav>
@@ -138,10 +140,6 @@
         <input type="submit" class="btn btn-success" style="background-color: #28a745;" value="Generate Invoice">
     </form>
     <br>
-
-    <a href="/register" style="padding-left:50px;"> Navigate to registration </a>
-    <br>
-    <a href="/login" style="padding-left:50px;"> Navigate to login </a>
 
     <script>
         function handleReplicationTypeChange() {
