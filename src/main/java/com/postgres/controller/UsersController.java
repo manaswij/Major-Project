@@ -1,3 +1,5 @@
+//UsersController.java
+
 package com.postgres.controller;
 
 import com.postgres.model.UsersModel;
@@ -49,7 +51,7 @@ public class UsersController {
      // Create a new user
         UsersModel user = new UsersModel();
         user.setLogin(usersModel.getLogin());
-        System.out.println("Login Value Before Insert: " + user.getLogin());
+        System.out.println("Login Value Before Insert : " + user.getLogin());
 
         user.setPassword(usersModel.getPassword());
         user.setEmail(usersModel.getEmail());
@@ -66,12 +68,12 @@ public class UsersController {
     @PostMapping("/login")
     public String login(@ModelAttribute UsersModel user, Model model, HttpSession session) {
         UsersModel authenticatedUser = userService.authenticateUser(user.getUsername(), user.getPassword());
-        System.out.println("Authentic: " + authenticatedUser);
+        System.out.println("Authentic user is : " + authenticatedUser);
 
         if (authenticatedUser != null) {
             session.setAttribute("user", authenticatedUser);
             model.addAttribute("user", authenticatedUser);
-            System.out.println("Authenticated User: " + authenticatedUser.getUsername() + " with id: " + authenticatedUser.getUserId());
+            System.out.println("Authenticated User : " + authenticatedUser.getUsername() + " with id : " + authenticatedUser.getUserId());
             return "redirect:/welcome";
         } else {
             model.addAttribute("errorMsg", "Invalid credentials. Please register.");

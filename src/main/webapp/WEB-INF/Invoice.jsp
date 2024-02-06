@@ -1,7 +1,10 @@
+<!-- Invoice.jsp -->
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.List" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="com.postgres.model.ReplicationOption" %>
+<%@ page import="com.postgres.model.UsersModel" %>
 
 <!DOCTYPE html>
 <html>
@@ -118,11 +121,7 @@ try {
                     <tbody>
                         <%
                         while (rs.next()) {
-                            // ... Existing code for displaying rows ...
-
-                            // Get the total amount for each row and add it to the grand total
-                            double totalAmount = Double.parseDouble(rs.getString("total_amount"));
-                            grandTotal += totalAmount;
+                            
                                                 %>
             <tr>
                 <td><%= rs.getString("common_id2") %></td>
@@ -160,12 +159,10 @@ try {
                 <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Tax(15%)</span>$111</li>
               </ul> -->
               <p class="text-black float-start">
-        <span class="text-black me-3"> Grand Total: Rs <%= grandTotal %> /-</span>
-                <!-- <span
+ <p class="text-black float-start"><span class="text-black me-3"> Total Amount: Rs 200/-</span>                <!-- <span
                   style="font-size: 25px;">$1221</span></p> -->
             </div>
           </div>
-          <hr>
           <div class="row">
             <div class="col-xl-10" >
               <h5 style="margin-left:40%; margin-top:20px">Thank you for your purchase!</h5>
@@ -176,7 +173,6 @@ try {
     </div>
 </div>
 
-          </div>
           </div>
           </div>
           

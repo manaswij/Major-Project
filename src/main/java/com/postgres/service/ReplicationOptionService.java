@@ -1,3 +1,5 @@
+//ReplicationOptionService.java
+
 package com.postgres.service;
 
 import java.util.List;
@@ -22,6 +24,8 @@ public class ReplicationOptionService {
     }
     public List<ReplicationOption> getAllReplicationOptions() {
         return dropdownRepo.findAll();
+        
+        
     } 
 }
 

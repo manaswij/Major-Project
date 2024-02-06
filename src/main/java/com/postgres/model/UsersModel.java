@@ -1,3 +1,5 @@
+//UsersModel.java
+
 package com.postgres.model;
 
 import jakarta.persistence.*;
