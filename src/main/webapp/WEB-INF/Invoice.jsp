@@ -42,20 +42,27 @@
 <%
 
 Connection con = null;
-Statement st = null;
+PreparedStatement preparedStatement = null;
+ResultSet rs = null;
+
 double grandTotal = 0.0; // Initialize grand total variable
 
 try {
     Class.forName("org.postgresql.Driver");
     con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/myDb", "postgres", "root");
-    st = con.createStatement();
 
-    // Assuming userId is the user ID you want to filter by
+    // Get the logged-in user from the session
+    UsersModel loggedInUser = (UsersModel) session.getAttribute("user");
+    int userId = loggedInUser.getUserId(); // Get the user ID
 
-    // Use a PreparedStatement to avoid SQL injection
-    PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM billing_user_details");
+    // Prepare the SQL statement with a parameterized query to avoid SQL injection
+    String sqlQuery = "SELECT * FROM billing_user_details WHERE user_id = ?";
+    preparedStatement = con.prepareStatement(sqlQuery);
+    preparedStatement.setInt(1, userId);
 
-    ResultSet rs = preparedStatement.executeQuery();
+    // Execute the query
+    rs = preparedStatement.executeQuery();
+
 %>
     
     
@@ -196,20 +203,24 @@ try {
 </script>
   
 <%
-    } catch (Exception e) {
-        e.printStackTrace();
-    } finally {
-        // Close resources
-        try {
-            if (st != null) {
-                st.close();
-            }
-            if (con != null) {
-                con.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+} catch (ClassNotFoundException | SQLException e) {
+    e.printStackTrace(); // Handle any exceptions, you might want to log or display an error message
+} finally {
+    // Close resources in the finally block
+    try {
+        if (rs != null) {
+            rs.close();
         }
+        if (preparedStatement != null) {
+            preparedStatement.close();
+        }
+        if (con != null) {
+            con.close();
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+}
+
 %>
 </body>

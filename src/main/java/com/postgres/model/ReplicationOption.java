@@ -59,7 +59,7 @@ public class ReplicationOption {
     private int commonId2; // Add common ID column
 
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private UsersModel usersModel;
 
@@ -206,21 +206,12 @@ public class ReplicationOption {
 //    public void setUserId(Integer userId) {
 //        this.userId = userId;
 //    }
-
     public UsersModel getUsersModel() {
         return usersModel;
     }
 
     public void setUsersModel(UsersModel usersModel) {
-        if (this.usersModel != null) {
-            this.usersModel.getReplicationOptions().remove(this); // Avoid recursion
-        }
-
         this.usersModel = usersModel;
-
-        if (usersModel != null && !usersModel.getReplicationOptions().contains(this)) {
-            usersModel.getReplicationOptions().add(this); // Maintain the bidirectional relationship
-        }
     }
     
     public int getCommonId2() {

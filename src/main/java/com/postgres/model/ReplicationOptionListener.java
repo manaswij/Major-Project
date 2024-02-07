@@ -14,9 +14,10 @@ public class ReplicationOptionListener {
         replicationOption.setEndDate(LocalDate.now());
         replicationOption.calculateNoOfDays();
         
-        UsersModel usersModel = replicationOption.getUsersModel();
-        if (usersModel != null) {
-            usersModel.addReplicationOption(replicationOption);
-        }
     }
 }
+
+//UsersModel usersModel = replicationOption.getUsersModel();
+//if (usersModel != null) {
+//  usersModel.addReplicationOption(replicationOption); // Ensure bidirectional relationship is maintained
+//}

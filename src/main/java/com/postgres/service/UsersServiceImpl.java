@@ -28,14 +28,14 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public UsersModel registerUser(UsersModel user) {
-        // Make sure the replicationOption is saved before the user
-        if (user.getReplicationOptions() != null) {
-            for (ReplicationOption replicationOption : user.getReplicationOptions()) {
-                replicationService.saveReplicationOptions(replicationOption);
-            }
+        ReplicationOption replicationOption = user.getReplicationOption();
+        if (replicationOption != null) {
+            replicationOption.setUsersModel(user);
+            replicationService.saveReplicationOption(replicationOption);
         }
         return userRepository.save(user);
     }
+
 
     @Override
     public UsersModel authenticateUser(String username, String password) {

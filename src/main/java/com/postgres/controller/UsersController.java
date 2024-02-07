@@ -2,7 +2,9 @@
 
 package com.postgres.controller;
 
+import com.postgres.model.ReplicationOption;
 import com.postgres.model.UsersModel;
+import com.postgres.service.ReplicationOptionService;
 import com.postgres.service.UsersService;
 
 import jakarta.servlet.http.HttpSession;
@@ -19,6 +21,9 @@ public class UsersController {
 
     @Autowired
     private UsersService userService;
+    
+    @Autowired
+    private ReplicationOptionService replicationService;
 
     @GetMapping("/register")
     public String getRegisterPage(Model model) {
@@ -39,31 +44,39 @@ public class UsersController {
 
 
     @PostMapping("/register")
-    public String register(@ModelAttribute UsersModel usersModel) {
+    public String register(@ModelAttribute UsersModel usersModel, Model model) {
         // Check if the user already exists
         UsersModel existingUser = userService.getUserByUsername(usersModel.getUsername());
         if (existingUser != null) {
             // Handle the case where the user already exists
-            // You might want to redirect to a registration failure page or show an error message
-            return "redirect:/registration-failure";
+            // You might want to redirect back to the registration page with an error message
+            model.addAttribute("errorMsg", "Username already exists. Please choose a different one.");
+            return "Register";
         }
 
-     // Create a new user
+        // Create a new user
         UsersModel user = new UsersModel();
         user.setLogin(usersModel.getLogin());
-        System.out.println("Login Value Before Insert : " + user.getLogin());
-
         user.setPassword(usersModel.getPassword());
         user.setEmail(usersModel.getEmail());
         user.setUsername(usersModel.getUsername());
-        System.out.println("User is Created ");
 
         // Save the user to the database
         UsersModel savedUser = userService.registerUser(user);
-        usersModel.setUserId(savedUser.getUserId());
+
+        // Initialize replicationOption
+        ReplicationOption replicationOption = usersModel.getReplicationOption();
+        if (replicationOption == null) {
+            replicationOption = new ReplicationOption(); // Initialize if null
+        }
+
+        // Now that the user is saved, set the replication options for the user
+        replicationOption.setUsersModel(savedUser);
+        replicationService.saveReplicationOption(replicationOption);
 
         return "redirect:/login";
     }
+
 
     @PostMapping("/login")
     public String login(@ModelAttribute UsersModel user, Model model, HttpSession session) {

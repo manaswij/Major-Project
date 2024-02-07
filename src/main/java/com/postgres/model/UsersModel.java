@@ -32,8 +32,8 @@ public class UsersModel {
     private String password;
     private String email;
 
-    @OneToMany(mappedBy = "usersModel", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<ReplicationOption> replicationOptions = new ArrayList<>();
+    @OneToOne(mappedBy = "usersModel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private ReplicationOption replicationOption;
 
     public UsersModel() {
         // Default constructor
@@ -97,20 +97,19 @@ public class UsersModel {
         this.email = email;
     }
 
-    public List<ReplicationOption> getReplicationOptions() {
-        return replicationOptions;
+    public ReplicationOption getReplicationOption() {
+        return replicationOption;
     }
 
-    public void setReplicationOptions(List<ReplicationOption> replicationOptions) {
-        this.replicationOptions = replicationOptions;
+    public void setReplicationOption(ReplicationOption replicationOption) {
+        this.replicationOption = replicationOption;
     }
-
-    public void addReplicationOption(ReplicationOption replicationOption) {
-        if (!replicationOptions.contains(replicationOption)) {
-            replicationOptions.add(replicationOption);
-            replicationOption.setUsersModel(this); // Maintain the bidirectional relationship
-        }
-    }
+//    public void addReplicationOption(ReplicationOption replicationOption) {
+//        if (!replicationOptions.contains(replicationOption)) {
+//            replicationOptions.add(replicationOption);
+//            replicationOption.setUsersModel(this); // Maintain the bidirectional relationship
+//        }
+//    }
 
     
 }
