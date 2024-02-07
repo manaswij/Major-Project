@@ -63,6 +63,5 @@ public class UsersServiceImpl implements UsersService {
     
     public UsersModel getLoggedInUser(HttpSession session) {
         return (UsersModel) session.getAttribute("user");
-    }
-
+    }    
 }

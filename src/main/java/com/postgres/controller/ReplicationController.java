@@ -34,82 +34,61 @@ public class ReplicationController {
     }
 
     @PostMapping("/saveReplicationOption")
-    public String saveReplicationOption(@ModelAttribute ReplicationOption replicationOption) {
-        // Calculate noOfDays first
-        replicationOption.calculateNoOfDays();
+    public String saveReplicationOption(@ModelAttribute ReplicationOption replicationOption, HttpSession session) {
+        // Retrieve the logged-in user from the session
+        UsersModel loggedInUser = usersService.getLoggedInUser(session);
+        
+        // Check if the user is logged in
+        if (loggedInUser != null) {
+            // Retrieve the existing ReplicationOption associated with the user's userId
+            ReplicationOption existingReplicationOption = replicationService.getReplicationOptionByUserId(loggedInUser.getUserId());
+            
+            if (existingReplicationOption != null) {
+                // Update the existing replication option with the new values
+                existingReplicationOption.setTechnique(replicationOption.getTechnique());
+                existingReplicationOption.setDirection(replicationOption.getDirection());
+                existingReplicationOption.setReplication_type(replicationOption.getReplication_type());
+                existingReplicationOption.setFlatfile(replicationOption.getFlatfile());
+                existingReplicationOption.setStartDate(replicationOption.getStartDate());
+                existingReplicationOption.setEndDate(replicationOption.getEndDate());
+                existingReplicationOption.setNumberOfBytes(replicationOption.getNumberOfBytes());
+                existingReplicationOption.setTotalAmount(replicationOption.getTotalAmount());
+                
+                existingReplicationOption.setEndDate(LocalDate.now());
 
-        // Set the chargeOfOneByte value
-        replicationOption.setChargeOfOneByte(2);
 
-        // Ensure that all fields are properly populated
-        // Technique
-        String technique = replicationOption.getTechnique();
-        if (technique == null || technique.isEmpty()) {
-            // Handle error or set default value
-        }
+                // Calculate noOfDays first
+                existingReplicationOption.calculateNoOfDays();
 
-        // Direction
-        String direction = replicationOption.getDirection();
-        if (direction == null || direction.isEmpty()) {
-            // Handle error or set default value
-        }
+                // Set the chargeOfOneByte value
+                existingReplicationOption.setChargeOfOneByte(2);
 
-        // Replication Type
-        String replicationType = replicationOption.getReplication_type();
-        if (replicationType == null || replicationType.isEmpty()) {
-            // Handle error or set default value
-        }
+                // Calculate Total Amount based on numberOfBytes and chargeOfOneByte
+                existingReplicationOption.calculateTotalAmount();
 
-        // Flatfile
-        // Check and handle if necessary
+                // Save the updated ReplicationOption
+                replicationService.saveReplicationOption(existingReplicationOption);
+            } else {
+                // If the existing ReplicationOption is not found, create a new one and associate it with the user
+                replicationOption.setUsersModel(loggedInUser);
 
-        // Start Date
-        LocalDate startDate = replicationOption.getStartDate();
-        if (startDate == null) {
-            // Handle error or set default value
-        }
+                // Calculate noOfDays first
+                replicationOption.calculateNoOfDays();
 
-        // End Date
-        LocalDate endDate = replicationOption.getEndDate();
-        if (endDate == null) {
-            // Handle error or set default value
-        }
+                // Set the chargeOfOneByte value
+                replicationOption.setChargeOfOneByte(2);
 
-        // No. of Bytes
-        Integer numberOfBytes = replicationOption.getNumberOfBytes();
-        if (numberOfBytes == null) {
-            // Handle error or set default value
-        }
+                // Calculate Total Amount based on numberOfBytes and chargeOfOneByte
+                replicationOption.calculateTotalAmount();
 
-        // Total Amount
-        Double totalAmount = replicationOption.getTotalAmount();
-        if (totalAmount == null) {
-            // Handle error or calculate based on other fields
-        }
+                // Save the ReplicationOption
+                replicationService.saveReplicationOption(replicationOption);
+            }
 
-        // Get the existing replication option for the user
-        ReplicationOption existingReplicationOption = replicationService.getReplicationOptionByCommonId2(replicationOption.getCommonId2());
-
-        // Update the existing replication option if it exists
-        if (existingReplicationOption != null) {
-            // Update the existing replication option with the new values
-            existingReplicationOption.setTechnique(replicationOption.getTechnique());
-            existingReplicationOption.setDirection(replicationOption.getDirection());
-            existingReplicationOption.setReplication_type(replicationOption.getReplication_type());
-            existingReplicationOption.setFlatfile(replicationOption.getFlatfile());
-            existingReplicationOption.setStartDate(replicationOption.getStartDate());
-            existingReplicationOption.setEndDate(replicationOption.getEndDate());
-            existingReplicationOption.setNumberOfBytes(replicationOption.getNumberOfBytes());
-            existingReplicationOption.setTotalAmount(replicationOption.getTotalAmount());
-            // Update any other fields as needed
-            // Save the updated replication option
-            replicationService.saveReplicationOption(existingReplicationOption);
+            return "Invoice";
         } else {
-            // If no existing replication option, save the new one
-            replicationService.saveReplicationOption(replicationOption);
+            // Handle the case where the user is not logged in
+            return "redirect:/login"; // Redirect to the login page
         }
-
-        return "Invoice";
     }
-
 }

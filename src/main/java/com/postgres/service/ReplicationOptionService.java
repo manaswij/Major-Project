@@ -32,6 +32,8 @@ public class ReplicationOptionService {
         return dropdownRepo.findByCommonId2(commonId2);
     }
     
-    
+    public ReplicationOption getReplicationOptionByUserId(Integer userId) {
+        return dropdownRepo.findByUsersModelUserId(userId);
+    }
 }
 
