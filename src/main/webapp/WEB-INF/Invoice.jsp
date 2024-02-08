@@ -5,6 +5,11 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="com.postgres.model.ReplicationOption" %>
 <%@ page import="com.postgres.model.UsersModel" %>
+<%@ page import="com.postgres.service.UsersService" %>
+<%@ page import="com.postgres.service.UsersService" %>
+<%@ page import="org.springframework.web.context.WebApplicationContext" %>
+<%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
+
 
 <!DOCTYPE html>
 <html>
@@ -40,6 +45,10 @@
 </head>
 <body>
 <%
+WebApplicationContext applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(application);
+
+//Retrieve the UsersService bean from the application context
+UsersService userService = applicationContext.getBean(UsersService.class);
 
 Connection con = null;
 PreparedStatement preparedStatement = null;
@@ -55,6 +64,11 @@ try {
     UsersModel loggedInUser = (UsersModel) session.getAttribute("user");
     int userId = loggedInUser.getUserId(); // Get the user ID
 
+ // Fetch the user details from the database based on the userId
+    UsersModel userDetails = userService.getUserByUserId(userId);
+    String fullname = userDetails.getFullName();
+    String email = userDetails.getEmail();
+    
     // Prepare the SQL statement with a parameterized query to avoid SQL injection
     String sqlQuery = "SELECT * FROM billing_user_details WHERE user_id = ?";
     preparedStatement = con.prepareStatement(sqlQuery);
@@ -93,8 +107,8 @@ try {
           <div class="row">
             <div class="col-xl-8">
               <ul class="list-unstyled">
-                <li class="text-muted">Username: <span style="color:#5d9fc5 ;">John</span></li>
-                <li class="text-muted">Email Id: <span style="color:#5d9fc5 ;">johndoe@gmail.com</span></li>
+ 	<li class="text-muted">Name: <span style="color:#5d9fc5 ;"><%= fullname %></span></li>
+    <li class="text-muted">Email Id: <span style="color:#5d9fc5 ;"><%= email %></span></li>
               </ul>
             </div>
             <div class="col-xl-4" id = "invoice">

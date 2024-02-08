@@ -55,8 +55,9 @@ public class UsersController {
         }
 
         // Create a new user
-        UsersModel user = new UsersModel();
-        user.setLogin(usersModel.getLogin());
+     // Create a new user
+        UsersModel user = new UsersModel(usersModel.getFullName(), usersModel.getUsername(), usersModel.getPassword(), usersModel.getEmail());
+        user.setFullName(usersModel.getFullName());
         user.setPassword(usersModel.getPassword());
         user.setEmail(usersModel.getEmail());
         user.setUsername(usersModel.getUsername());

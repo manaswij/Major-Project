@@ -1,5 +1,3 @@
-//UsersModel.java
-
 package com.postgres.model;
 
 import jakarta.persistence.*;
@@ -20,14 +18,15 @@ public class UsersModel {
     @Column(name = "common_id", unique = true, nullable = false)
     private int commonId;
     
- // Generate a random 4-digit number for commonId
+    // Generate a random 4-digit number for commonId
     @PrePersist
     public void generateCommonId() {
         this.commonId = (int) (Math.random() * 9000) + 1000;
     }
 
+    @Column(name = "full_name")
+    private String fullName;
 
-    private String login;
     private String username;
     private String password;
     private String email;
@@ -38,18 +37,16 @@ public class UsersModel {
     public UsersModel() {
         // Default constructor
     }
-    
-    
 
-    public UsersModel(String login, String username, String password, String email) {
-        this.login = login;
+    public UsersModel(String fullName, String username, String password, String email) {
+        this.fullName = fullName;
         this.username = username;
         this.password = password;
         this.email = email;
     }
 
     public Integer getUserId() {
-        System.out.println("Authentic: "+ userId);
+        System.out.println("Authentic: " + userId);
         return this.userId;
     }
 
@@ -65,12 +62,12 @@ public class UsersModel {
         this.commonId = commonId;
     }
 
-    public String getLogin() {
-        return login;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getUsername() {
@@ -104,12 +101,4 @@ public class UsersModel {
     public void setReplicationOption(ReplicationOption replicationOption) {
         this.replicationOption = replicationOption;
     }
-//    public void addReplicationOption(ReplicationOption replicationOption) {
-//        if (!replicationOptions.contains(replicationOption)) {
-//            replicationOptions.add(replicationOption);
-//            replicationOption.setUsersModel(this); // Maintain the bidirectional relationship
-//        }
-//    }
-
-    
 }

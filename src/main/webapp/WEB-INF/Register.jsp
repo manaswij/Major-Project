@@ -23,7 +23,14 @@
         <div class="col-4">
        <!--   <h2><%= request.getAttribute("errorMsg") %></h2>  --> 
        
-            <form action="/register" method="post" modelAttribute="registerRequest">
+       <form action="/register" method="post" modelAttribute="registerRequest">
+                
+                
+                
+                <label class="form-label">Full Name</label>
+                <input type="text" class="form-control" name="fullName">
+                <br>
+       
                 <label class="form-label">UserName</label>
                 <input type="text" class="form-control" name="username">
                 <br>
