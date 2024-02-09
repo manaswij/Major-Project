@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 import com.postgres.model.ReplicationOption;
 import com.postgres.model.UsersModel;
 import com.postgres.repository.UsersRepository;
-import com.postgres.service.ReplicationOptionService; // Import ReplicationOptionService
-
 import jakarta.persistence.NonUniqueResultException;
 import jakarta.servlet.http.HttpSession;
 
@@ -63,5 +61,10 @@ public class UsersServiceImpl implements UsersService {
     
     public UsersModel getLoggedInUser(HttpSession session) {
         return (UsersModel) session.getAttribute("user");
-    }    
+    } 
+    
+    @Override
+    public void updateUser(UsersModel user) {
+        userRepository.save(user);
+    }
 }

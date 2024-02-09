@@ -55,12 +55,7 @@ public class UsersController {
         }
 
         // Create a new user
-     // Create a new user
         UsersModel user = new UsersModel(usersModel.getFullName(), usersModel.getUsername(), usersModel.getPassword(), usersModel.getEmail());
-        user.setFullName(usersModel.getFullName());
-        user.setPassword(usersModel.getPassword());
-        user.setEmail(usersModel.getEmail());
-        user.setUsername(usersModel.getUsername());
 
         // Save the user to the database
         UsersModel savedUser = userService.registerUser(user);
@@ -79,6 +74,8 @@ public class UsersController {
     }
 
 
+    
+    
     @PostMapping("/login")
     public String login(@ModelAttribute UsersModel user, Model model, HttpSession session) {
         UsersModel authenticatedUser = userService.authenticateUser(user.getUsername(), user.getPassword());
@@ -88,20 +85,20 @@ public class UsersController {
             session.setAttribute("user", authenticatedUser);
             model.addAttribute("user", authenticatedUser);
             System.out.println("Authenticated User : " + authenticatedUser.getUsername() + " with id : " + authenticatedUser.getUserId());
-            return "redirect:/welcome";
+
+            // Check if replication options are selected
+            if (authenticatedUser.isReplicationOptionsSelected()) {
+                return "redirect:/invoice";
+            } else {
+                return "redirect:/welcome";
+            }
         } else {
             model.addAttribute("errorMsg", "Invalid credentials. Please register.");
             return "Login";
         }
     }
-
-
-
-
-
     
+    
+
    
-   
-    
-    
 }

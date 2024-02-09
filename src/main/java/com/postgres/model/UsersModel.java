@@ -1,9 +1,6 @@
 package com.postgres.model;
 
 import jakarta.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 
 @Entity
@@ -30,6 +27,10 @@ public class UsersModel {
     private String username;
     private String password;
     private String email;
+    
+    @Column(name = "replication_options_selected", nullable = false, columnDefinition = "boolean default false")
+    private boolean replicationOptionsSelected;
+
 
     @OneToOne(mappedBy = "usersModel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private ReplicationOption replicationOption;
@@ -94,6 +95,15 @@ public class UsersModel {
         this.email = email;
     }
 
+    public boolean isReplicationOptionsSelected() {
+        return replicationOptionsSelected;
+    }
+
+    public void setReplicationOptionsSelected(boolean replicationOptionsSelected) {
+        this.replicationOptionsSelected = replicationOptionsSelected;
+    }
+    
+    
     public ReplicationOption getReplicationOption() {
         return replicationOption;
     }

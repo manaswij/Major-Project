@@ -11,5 +11,6 @@ public interface UsersService {
     UsersModel getUserByUsername(String username);
     UsersModel getUserByUserId(int userId);
     UsersModel getLoggedInUser(HttpSession session);
+    void updateUser(UsersModel user); // Add updateUser method to the interface
 
 }

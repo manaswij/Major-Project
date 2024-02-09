@@ -111,10 +111,14 @@ try {
     <li class="text-muted">Email Id: <span style="color:#5d9fc5 ;"><%= email %></span></li>
               </ul>
             </div>
+             <%
+                        while (rs.next()) {
+                            
+                                                %>
             <div class="col-xl-4" id = "invoice">
               <ul class="list-unstyled">
                 <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
-                    class="fw-bold">Invoice Id:</span>2829</li>
+                    class="fw-bold">Invoice Id:</span><%= rs.getString("common_id2") %></li>
                 <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
                     class="me-1 fw-bold">Status:</span><span class="badge bg-warning text-black fw-bold">
                     Unpaid</span></li>
@@ -123,7 +127,7 @@ try {
           </div>
 
             <div class="row my-2 mx-1 justify-content-center">
-                <table class="table table-striped table-borderless">
+                <table class="table table-striped table-borderless" style="padding:100%;">
                     <thead style="background-color:#002b80 ;" class="text-white">
             <tr>
                 <th>ID</th>
@@ -140,12 +144,9 @@ try {
             </tr>
                     </thead>
                     <tbody>
-                        <%
-                        while (rs.next()) {
-                            
-                                                %>
+                       
             <tr>
-                <td><%= rs.getString("common_id2") %></td>
+                <td><%= rs.getString("user_id") %></td>
                 <td><%= rs.getString("technique") %></td>
                 <td><%= rs.getString("direction") %></td>
                 <td><%= rs.getString("replication_type") %></td>
@@ -158,9 +159,7 @@ try {
                 <td><%= rs.getString("total_amount") %></td>
                 
             </tr>
-                        <%
-                            } 
-                        %>
+                        
                     </tbody>
                 </table>
             </div>
@@ -180,9 +179,15 @@ try {
                 <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Tax(15%)</span>$111</li>
               </ul> -->
               <p class="text-black float-start">
- <p class="text-black float-start"><span class="text-black me-3"> Total Amount: Rs 200/-</span>                <!-- <span
-                  style="font-size: 25px;">$1221</span></p> -->
+ <h6 class="text-black float-start"><span class="text-black me-3" style="margin-left: -40px;"> Total Amount: Rs.<%= rs.getString("total_amount") %>/-</span> </h6>               
+<!-- <span
+                  style="font-size: 25px;">$1221</span> -->
+                  
+                        <%
+                            } 
+                        %>
             </div>
+            
           </div>
           <div class="row">
             <div class="col-xl-10" >
@@ -190,7 +195,8 @@ try {
             </div>
             <!-- Pay Now button linking to payment.jsp -->
 			<div class="col-xl-2">
-        <a href="/payment" class="btn btn-success mt-3" style="margin-left: -90%; margin-top: 20px">Pay Now</a>
+		 <a href="/payment" class="btn btn-success mt-3" style="margin-left: -90%; margin-top: 20px">Pay Now</a>	
+		<a href="/welcome" class="btn btn-primary  mt-3" style="margin-left: -90%; margin-top: 20px">Renew Plan</a>			
     </div>
 </div>
 
@@ -238,3 +244,4 @@ try {
 
 %>
 </body>
+</html>

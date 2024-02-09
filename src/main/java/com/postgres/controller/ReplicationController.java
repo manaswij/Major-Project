@@ -35,12 +35,16 @@ public class ReplicationController {
 
     @PostMapping("/saveReplicationOption")
     public String saveReplicationOption(@ModelAttribute ReplicationOption replicationOption, HttpSession session) {
+    	
+    	
         // Retrieve the logged-in user from the session
         UsersModel loggedInUser = usersService.getLoggedInUser(session);
         
         // Check if the user is logged in
         if (loggedInUser != null) {
             // Retrieve the existing ReplicationOption associated with the user's userId
+        	loggedInUser.setReplicationOptionsSelected(true);
+            usersService.updateUser(loggedInUser);
             ReplicationOption existingReplicationOption = replicationService.getReplicationOptionByUserId(loggedInUser.getUserId());
             
             if (existingReplicationOption != null) {
@@ -83,6 +87,8 @@ public class ReplicationController {
 
                 // Save the ReplicationOption
                 replicationService.saveReplicationOption(replicationOption);
+                
+                
             }
 
             return "Invoice";
