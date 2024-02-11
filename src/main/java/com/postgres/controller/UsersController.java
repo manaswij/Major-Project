@@ -90,7 +90,7 @@ public class UsersController {
             if (authenticatedUser.isReplicationOptionsSelected()) {
                 return "redirect:/invoice";
             } else {
-                return "redirect:/welcome";
+                return "redirect:/plan";
             }
         } else {
             model.addAttribute("errorMsg", "Invalid credentials. Please register.");

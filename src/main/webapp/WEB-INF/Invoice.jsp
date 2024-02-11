@@ -89,6 +89,9 @@ try {
     <a class="btn btn-light text-capitalize border-0" data-mdb-ripple-color="dark" style="background-color: #e2e2e2;">
         <i class="fas fa-print text-primary" id="download"></i> Download PDF
     </a>
+    <a href="/login" class="btn btn-light text-capitalize border-0" data-mdb-ripple-color="dark" style="background-color: #e2e2e2;">
+        <i class="fas fa-print text-primary" id="download"></i> Logout
+    </a>
 </div>
 
           <hr>
@@ -196,7 +199,7 @@ try {
             <!-- Pay Now button linking to payment.jsp -->
 			<div class="col-xl-2">
 		 <a href="/payment" class="btn btn-success mt-3" style="margin-left: -90%; margin-top: 20px">Pay Now</a>	
-		<a href="/welcome" class="btn btn-primary  mt-3" style="margin-left: -90%; margin-top: 20px">Renew Plan</a>			
+		<a href="/plan" class="btn btn-primary  mt-3" style="margin-left: -90%; margin-top: 20px">Renew Plan</a>			
     </div>
 </div>
 
@@ -216,7 +219,7 @@ try {
                 filename: 'invoice.pdf',
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 2 },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
+                jsPDF: { unit: 'mm', format: '4a', orientation: 'landscape' }
             });
         });
     });
