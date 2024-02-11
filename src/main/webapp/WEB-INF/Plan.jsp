@@ -9,10 +9,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style type="text/css">
-    body {
-      margin-top: 20px;
-    }
-
     .pricing-box {
       -webkit-box-shadow: 0px 5px 30px -10px rgba(0, 0, 0, 0.1);
       box-shadow: 0px 5px 30px -10px rgba(0, 0, 0, 0.1);
@@ -72,6 +68,47 @@
 </head>
 
 <body>
+<nav class="navbar navbar-expand-lg" style="background-color: #002b80;">
+        <a href="#" class="navbar-brand text-white">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link text-white" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled text-white" href="#">Disabled</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <div class="nav-link">
+                <a href="/login" class="btn btn-outline-success my-2 my-sm-0 text-white" >
+                  Logout
+                </a>
+                </div>               
+            </form>
+        </div>
+    </nav>
   <section class="section" id="pricing">
     <div class="container">
       <div class="row">
@@ -85,10 +122,13 @@
                     src="https://cdn-web.gofrugal.com/images/billing-software/visual2.png" alt="...">
                 </div>
                 <div class="col-lg-5">
-                  <h1>Billing Plan</h1>
-                  <p>Billing Module is Divided into 3 parts. Users need to select a plan according to their preference
-                    and subscribe to a Monthly, Quarterly, or Yearly Plan based on their needs. We hope you enjoy this
-                    experience! For a more user-friendly experience, do subscribe!</p> <a class="btn btn-primary" href="#pricing-section">Subscribe Now!</a></div>
+                  <h2>Welcome to our Data Replication Billing Module!</h2>
+                  <br>
+                  <p>We understand the importance of reliable and efficient data replication for your business's success. Our advanced system ensures that your critical data is replicated effortlessly.Whether you're opting for our monthly, quarterly, or yearly plans, rest assured that you're in capable hands.
+                  <br>
+                  <br>
+                  New to our platform? Welcome aboard! It's time to take control of your data. Select a plan that suits your needs and let's get started on your replication journey. 
+                  </p> <a class="btn btn-primary" href="#pricing-section">Choose your plan</a></div>
                 </div>
               </div>
               <!-- Subscribe to our plan-->
