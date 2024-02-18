@@ -28,6 +28,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.0/html2pdf.bundle.min.js"></script>
+    <!-- Add this script tag in your HTML file -->
+	<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     
     <style>
     /* Add this style to your existing styles or in the head section */
@@ -186,9 +189,7 @@ try {
 <!-- <span
                   style="font-size: 25px;">$1221</span> -->
                   
-                        <%
-                            } 
-                        %>
+                       
             </div>
             
           </div>
@@ -198,15 +199,45 @@ try {
             </div>
             <!-- Pay Now button linking to payment.jsp -->
 			<div class="col-xl-2">
-		 <a href="/payment" class="btn btn-success mt-3" style="margin-left: -90%; margin-top: 20px">Pay Now</a>	
-		<a href="/plan" class="btn btn-primary  mt-3" style="margin-left: -90%; margin-top: 20px">Renew Plan</a>			
-    </div>
+<a href="#" class="btn btn-success mt-3" style="margin-left: -90%; margin-top: 20px" onclick="initiatePayment(<%= rs.getString("total_amount") %>)">Pay Now</a>
+    <a href="/plan" class="btn btn-primary mt-3" style="margin-left: -90%; margin-top: 20px">Renew Plan</a>
+</div>
+ 						<%
+                            } 
+                        %>
 </div>
 
           </div>
           </div>
           
           <script>
+          function initiatePayment(amount) {
+        	    var options = {
+        	        "key": "rzp_test_HQK3ZTPsNUZccc",
+        	        "amount": amount * 100, // amount in paisa
+        	        "currency": "INR",
+        	        "name": "Your Company Name",
+        	        "description": "Payment for Services",
+        	        "image": "path/to/your/logo.png",
+        	        "handler": function (response){
+        	            // Handle payment success
+        	            alert("Payment successful! Payment ID: " + response.razorpay_payment_id);
+        	            // Redirect or perform any other action
+        	        },
+        	        "prefill": {
+        	            "name": "User Name",
+        	            "email": "user@example.com"
+        	        },
+        	        "theme": {
+        	            "color": "#002b80"
+        	        }
+        	    };
+        	    var rzp = new Razorpay(options);
+        	    rzp.open();
+        	}
+
+
+          
     $(document).ready(function () {
         // Add click event listener to the Download PDF button
         $(".btn-light").click(function () {
@@ -223,6 +254,7 @@ try {
             });
         });
     });
+    
 </script>
   
 <%
