@@ -31,24 +31,28 @@
 <body>
 
     <nav class="navbar navbar-expand-lg" style="background-color: #002b80;">
-        <a href="#" class="navbar-brand text-white">Navbar</a>
+        <a href="#" class="navbar-brand">
+            <a href="https://ibb.co/2F8LpzG"><img src="https://i.ibb.co/K5NQ8tT/C-DAC-processed.png" alt="C-DAC-processed" style="width: 100px; height: auto;">
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+    
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link text-white" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link text-white" href="/plan">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Link</a>
+                    <a class="nav-link text-white" href="#">Overview</a>
                 </li>
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown
+                        Reports
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="#">Action</a>
@@ -57,23 +61,51 @@
                         <a class="dropdown-item" href="#">Something else here</a>
                     </div>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link disabled text-white" href="#">Disabled</a>
+                    <a class="nav-link text-white" href="#">Support</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">Documentation</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link disabled text-white" href="#">About Us</a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <div class="nav-link">
-                <a href="/login" class="btn btn-outline-success my-2 my-sm-0 text-white" >
-                  Logout
-                </a>
-                </div>               
+                    <a href="/login" class="btn btn-outline-success my-2 my-sm-0 text-white">
+                        Logout
+                    </a>
+                </div>
             </form>
         </div>
     </nav>
+
+    <!-- Place the image outside the nav -->
+    <div class="row gx-4 gx-lg-5 align-items-center my-5" style="position: absolute; top: 6vh; left: 120vh; margin: 20px;">
+        <div class="col-lg-10">
+            <img class="img-fluid rounded mb-4 mb-lg-0" src="https://www.scnsoft.com/financial-management-software/automated-billing-system/automated-billing-system-cover-picture.svg">
+            <p style="font-size: 16px;">
+                Please note the following byte ranges for each type of replication:
+                <br>
+                <br>
+                <b>File-level Replication:</b>This replication method operates on individual files. For optimal performance, we recommend file sizes ranging from 1 MB to 100 MB.<br>
+                <br>
+                <b>Block-level Replication:</b>Block-level replication focuses on smaller units within files, enhancing efficiency. Ideal block sizes typically fall between 1 MB  and 4 MB.<br>
+                <br>
+                <b>MongoDB Replication:</b>MongoDB replication involves replicating data at the document level. To ensure smooth replication, document sizes should ideally range from 1 MB to 16 MB.
+            </p>
+        </div>
+    </div>
+    
+
     <br>
 
-    <h1 style="padding-left:50px;">Welcome to the homepage. Thanks for choosing our DRM module! </h1>
+    <h1 style="padding-left:50px;"> Thanks for choosing our DRM module! </h1>
     <h3 style="padding-left:50px;">Hello, ${user.username}!</h3>
     <br>
     <h5 style="padding-left:50px;">You are currently using: </h5>
@@ -133,10 +165,10 @@
         </div>
 
         <div class="form-group" id="bytesInput" style="display: none;">
-            <label for="numberOfBytes">No. of Bytes</label>
-            <input type="number" class="form-control" min="0" required id="numberOfBytes" name="numberOfBytes"
-                style="width: 30%;">
-        </div>
+    <label for="numberOfBytes">No. of Bytes</label>
+    <input type="number" class="form-control" step="0.01" min="1.0" required id="numberOfBytes" name="numberOfBytes" style="width: 30%;">
+</div>
+
 
         <br>
         <input type="submit" class="btn btn-success" style="background-color: #28a745;" value="Generate Invoice">

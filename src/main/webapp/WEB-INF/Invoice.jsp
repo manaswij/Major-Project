@@ -121,15 +121,12 @@ try {
                         while (rs.next()) {
                             
                                                 %>
-            <div class="col-xl-4" id = "invoice">
+            <div class="col-xl-4" id="invoice">
               <ul class="list-unstyled">
-                <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
-                    class="fw-bold">Invoice Id:</span><%= rs.getString("common_id2") %></li>
-                <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
-                    class="me-1 fw-bold">Status:</span><span class="badge bg-warning text-black fw-bold">
-                    Unpaid</span></li>
+                  <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA;"></i> <span class="fw-bold">Invoice Id:</span><span style="color:#5d9fc5 ;"><%= rs.getString("common_id") %></li>
+                  <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA;"></i> <span class="me-1 fw-bold">Status:</span><span class="badge bg-success fw-bold text-white"> Paid </span></li>
               </ul>
-            </div>
+          </div>
           </div>
 
             <div class="row my-2 mx-1 justify-content-center">
@@ -212,9 +209,12 @@ try {
           
           <script>
           function initiatePayment(amount) {
+        	    // Convert the decimal amount to integer paisa
+        	    var amountInPaise = Math.round(amount * 100);
+
         	    var options = {
         	        "key": "rzp_test_HQK3ZTPsNUZccc",
-        	        "amount": amount * 100, // amount in paisa
+        	        "amount": amountInPaise, // amount in paisa
         	        "currency": "INR",
         	        "name": "Your Company Name",
         	        "description": "Payment for Services",

@@ -8,6 +8,8 @@
   <title>Pricing Package Table - Bootdey.com</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css">
+  
   <style type="text/css">
     .pricing-box {
       -webkit-box-shadow: 0px 5px 30px -10px rgba(0, 0, 0, 0.1);
@@ -69,45 +71,59 @@
 
 <body>
 <nav class="navbar navbar-expand-lg" style="background-color: #002b80;">
-        <a href="#" class="navbar-brand text-white">Navbar</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link text-white" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Link</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
+        <a href="#" class="navbar-brand">
+            <a href="https://ibb.co/2F8LpzG"><img src="https://i.ibb.co/K5NQ8tT/C-DAC-processed.png" alt="C-DAC-processed"
+                    style="width: 100px; height: auto;">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    
+    
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link text-white" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Overview</a>
+                    </li>
+    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Reports
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+    
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Support</a>
+                    </li>
+    
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Documentation</a>
+                    </li>
+    
+                    <li class="nav-item">
+                        <a class="nav-link disabled text-white" href="#">About Us</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <div class="nav-link">
+                        <a href="/login" class="btn btn-outline-success my-2 my-sm-0 text-white">
+                            Logout
+                        </a>
                     </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled text-white" href="#">Disabled</a>
-                </li>
-            </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <div class="nav-link">
-                <a href="/login" class="btn btn-outline-success my-2 my-sm-0 text-white" >
-                  Logout
-                </a>
-                </div>               
-            </form>
-        </div>
+                </form>
+            </div>
     </nav>
   <section class="section" id="pricing">
     <div class="container">
