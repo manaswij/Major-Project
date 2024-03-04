@@ -209,33 +209,50 @@ try {
           
           <script>
           function initiatePayment(amount) {
-        	    // Convert the decimal amount to integer paisa
-        	    var amountInPaise = Math.round(amount * 100);
+      	    // Convert the decimal amount to integer paisa
+      	    var amountInPaise = Math.round(amount * 100);
 
-        	    var options = {
-        	        "key": "rzp_test_HQK3ZTPsNUZccc",
-        	        "amount": amountInPaise, // amount in paisa
-        	        "currency": "INR",
-        	        "name": "Your Company Name",
-        	        "description": "Payment for Services",
-        	        "image": "path/to/your/logo.png",
-        	        "handler": function (response){
-        	            // Handle payment success
-        	            alert("Payment successful! Payment ID: " + response.razorpay_payment_id);
-        	            // Redirect or perform any other action
-        	        },
-        	        "prefill": {
-        	            "name": "User Name",
-        	            "email": "user@example.com"
-        	        },
-        	        "theme": {
-        	            "color": "#002b80"
-        	        }
-        	    };
-        	    var rzp = new Razorpay(options);
-        	    rzp.open();
-        	}
-
+      	    var options = {
+      	        "key": "rzp_test_HQK3ZTPsNUZccc",
+      	        "amount": amountInPaise, // amount in paisa
+      	        "currency": "INR",
+      	        "name": "Your Company Name",
+      	        "description": "Payment for Services",
+      	        "image": "path/to/your/logo.png",
+      	        "handler": function (response) {
+      	            // Handle payment success
+      	            alert("Payment successful! Payment ID: " + response.razorpay_payment_id);
+      	            // Save payment ID and update payment status
+      	            savePaymentDetails(response.razorpay_payment_id);
+      	            // Redirect or perform any other action
+      	        },
+      	        "prefill": {
+      	            "name": "User Name",
+      	            "email": "user@example.com"
+      	        },
+      	        "theme": {
+      	            "color": "#002b80"
+      	        }
+      	    };
+      	    var rzp = new Razorpay(options);
+      	    rzp.open();
+      	}
+        
+        function savePaymentDetails(paymentId) {
+      	    $.ajax({
+      	        type: "POST",
+      	        url: "/savePaymentDetails", // Update the URL to match your endpoint
+      	        data: { paymentId: paymentId },
+      	        success: function(data) {
+      	            // Handle success
+      	            console.log(data);
+      	        },
+      	        error: function(xhr, status, error) {
+      	            // Handle error
+      	            console.error(xhr.responseText);
+      	        }
+      	    });
+      	}
 
           
     $(document).ready(function () {
